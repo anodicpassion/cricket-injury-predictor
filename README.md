@@ -1,22 +1,28 @@
-# Welcome to your Lovable project
+# Cricket Injury Prediction
 
-## Project info
+## About
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+This project focuses on predicting the **probability** of injury in cricket players based on recent match workload, physical attributes, recovery patterns, and contextual factors. The goal is to help **teams**, **analysts**, and **support staff** identify high-risk players early and make informed decisions around rest, rotation, and training intensity.
 
-## How can I edit this code?
+The model uses a combination of player **characteristics**, **short-term** and **long-term workload metrics**, **injury history**, and **match-related factors** to estimate injury risk as a percentage. These predictions are designed to be displayed through an interactive dashboard, making the results easy to interpret and actionable.
 
-There are several ways of editing your application.
+## Demonstration
+https://github.com/user-attachments/assets/723bc8f0-cc5c-4926-b8f6-5ecb22217bee
 
-**Use Lovable**
+## Core Features Used
+- **🧍 Player Characteristics**
+-     Age, BMI, player role, and playing style
+- **🏏 Workload & Match Load**
+-     Matches played (weekly and monthly)
+- **💪🏻 Workload Change & Fatigue**
+-     Balls faced and workload metrics
+- **🩺 Injury History**
+-     Injury count and rest days
+- **🌎 External / Contextual**
+-     Travel load and match format
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Setup
 
 The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
@@ -24,10 +30,10 @@ Follow these steps:
 
 ```sh
 # Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+git clone [<YOUR_GIT_URL>](https://github.com/anodicpassion/cricket-injury-predictor.git)
 
 # Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+cd cricket-injury-predictor
 
 # Step 3: Install the necessary dependencies.
 npm i
@@ -60,14 +66,8 @@ This project is built with:
 - shadcn-ui
 - Tailwind CSS
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Use Cases
+- Player workload management
+- Injury prevention and squad rotation
+- Performance and sports analytics research
