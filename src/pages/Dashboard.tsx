@@ -64,6 +64,8 @@ const Dashboard = () => {
 
   const handleLogout = () => {
     localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("token");
+    localStorage.removeItem("username");
     toast({
       title: "Logged out",
       description: "You have been successfully logged out.",
@@ -77,19 +79,40 @@ const Dashboard = () => {
     setPrediction(null);
     setShowResult(false);
 
-    // Simulate API call with loading
-    await new Promise(resolve => setTimeout(resolve, 2000));
-
-    // Generate random prediction between 0-100
-    const randomPrediction = Math.floor(Math.random() * 101);
-    setPrediction(randomPrediction);
-    setShowResult(true);
+    try {
+      const { apiService } = await import('@/services/api');
+      const predictionData = {
+        age: parseInt(playerData.age),
+        playerRole: playerData.playerRole.charAt(0).toUpperCase() + playerData.playerRole.slice(1),
+        playerType: playerData.playerType.charAt(0).toUpperCase() + playerData.playerType.slice(1),
+        bmi: parseFloat(playerData.bmi),
+        matchesLastWeek: parseInt(playerData.matchesLastWeek),
+        matchesLastMonth: parseInt(playerData.matchesLastMonth),
+        ballsFacedLastMatch: parseInt(playerData.ballsFacedLastMatch),
+        acuteWorkload: parseFloat(playerData.acuteWorkload),
+        chronicWorkload: parseFloat(playerData.chronicWorkload),
+        injuriesLast30d: parseInt(playerData.injuriesLast30Days),
+        restDays: parseInt(playerData.restDays),
+        travelLoad: playerData.travelLoad.charAt(0).toUpperCase() + playerData.travelLoad.slice(1),
+        matchFormat: playerData.matchFormat.toUpperCase()
+      };
+      
+      const response = await apiService.predict(predictionData);
+      setPrediction(response.injuryRisk);
+      setShowResult(true);
+      
+      toast({
+        title: "Prediction Complete",
+        description: `Injury probability calculated for ${playerData.playerName || "Player"}.`,
+      });
+    } catch (error: any) {
+      toast({
+        title: "Prediction failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
     setIsLoading(false);
-
-    toast({
-      title: "Prediction Complete",
-      description: `Injury probability calculated for ${playerData.playerName || "Player"}.`,
-    });
   };
 
   const handleReset = () => {
@@ -180,10 +203,10 @@ const Dashboard = () => {
                           <SelectValue placeholder="Select role" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="batsman">Batsman</SelectItem>
-                          <SelectItem value="bowler">Bowler</SelectItem>
-                          <SelectItem value="all-rounder">All-rounder</SelectItem>
-                          <SelectItem value="wicket-keeper">Wicket-keeper</SelectItem>
+                          <SelectItem value="Batsman">Batsman</SelectItem>
+                          <SelectItem value="Bowler">Bowler</SelectItem>
+                          <SelectItem value="All-rounder">All-rounder</SelectItem>
+                          <SelectItem value="Wicket-keeper">Wicket-keeper</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -199,9 +222,9 @@ const Dashboard = () => {
                           <SelectValue placeholder="Select type" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="aggressive">Aggressive</SelectItem>
-                          <SelectItem value="smooth">Smooth</SelectItem>
-                          <SelectItem value="numb">Numb</SelectItem>
+                          <SelectItem value="Aggressive">Aggressive</SelectItem>
+                          <SelectItem value="Smooth">Smooth</SelectItem>
+                          <SelectItem value="Numb">Numb</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -232,9 +255,9 @@ const Dashboard = () => {
                           <SelectValue placeholder="Select format" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="test">Test</SelectItem>
-                          <SelectItem value="odi">ODI</SelectItem>
-                          <SelectItem value="t20">T20</SelectItem>
+                          <SelectItem value="Test">Test</SelectItem>
+                          <SelectItem value="ODI">ODI</SelectItem>
+                          <SelectItem value="T20">T20</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>
@@ -250,9 +273,9 @@ const Dashboard = () => {
                           <SelectValue placeholder="Select travel load" />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="low">Low (Same city)</SelectItem>
-                          <SelectItem value="medium">Medium (Domestic)</SelectItem>
-                          <SelectItem value="high">High (International)</SelectItem>
+                          <SelectItem value="Low">Low (Same city)</SelectItem>
+                          <SelectItem value="Medium">Medium (Domestic)</SelectItem>
+                          <SelectItem value="High">High (International)</SelectItem>
                         </SelectContent>
                       </Select>
                     </div>

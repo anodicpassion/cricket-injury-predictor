@@ -18,20 +18,23 @@ const Login = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    if (userId === "admin" && password === "admin") {
-      localStorage.setItem("isAuthenticated", "true");
+    try {
+      const { apiService } = await import('@/services/api');
+      const response = await apiService.login({ username: userId, password });
+      
+      localStorage.setItem('token', response.token);
+      localStorage.setItem('username', response.username);
+      localStorage.setItem('isAuthenticated', 'true');
+      
       toast({
         title: "Welcome back!",
         description: "You have successfully logged in.",
       });
       navigate("/dashboard");
-    } else {
+    } catch (error: any) {
       toast({
-        title: "Invalid credentials",
-        description: "Please check your user ID and password.",
+        title: "Login failed",
+        description: error.message,
         variant: "destructive",
       });
     }

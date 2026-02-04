@@ -36,13 +36,23 @@ const Register = () => {
     }
 
     setIsLoading(true);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-
-    toast({
-      title: "Registration successful!",
-      description: "Please login with your credentials.",
-    });
-    navigate("/login");
+    
+    try {
+      const { apiService } = await import('@/services/api');
+      await apiService.register({ username: formData.userId, password: formData.password });
+      
+      toast({
+        title: "Registration successful!",
+        description: "Please login with your credentials.",
+      });
+      navigate("/login");
+    } catch (error: any) {
+      toast({
+        title: "Registration failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    }
     setIsLoading(false);
   };
 
