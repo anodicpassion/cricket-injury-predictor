@@ -71,7 +71,7 @@ npm install
 ```sh
 source .venv/bin/activate
 python app.py
-# Backend runs on http://localhost:5000
+# Backend runs on http://localhost:5500
 ```
 
 **Terminal 2 - React Frontend:**
@@ -155,4 +155,6 @@ The `train_model.py` script:
 ## License
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+
+## Support
 ⭐ If you found this project helpful, please consider giving it a star!
